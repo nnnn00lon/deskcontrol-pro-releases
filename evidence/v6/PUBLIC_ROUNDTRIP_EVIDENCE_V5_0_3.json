@@ -1,0 +1,49 @@
+{
+  "version": "5.0.3",
+  "validatedAt": "2026-09-04",
+  "canonicalSite": "https://deskcontrol-pro.pages.dev",
+  "release": "https://github.com/nnnn00lon/deskcontrol-pro-releases/releases/tag/v5.0.3",
+  "hotfix": "Windows WeatherPanel startup crash: TypeError Cannot read properties of undefined (reading 'city') at WeatherPanel.tsx",
+  "rootCause": "At Windows startup the safe React weather state could be replaced by the NativeHost GET_WEATHER payload, which does not always contain location; the UI also expected feelsLike while the backend emits apparentTemperature, and old/incomplete state {available:false, stale:false} could be rendered unguarded.",
+  "fix": [
+    "shared normalizeWeather canonicalizes any incoming payload: undefined/null, missing location, missing city, loading, unavailable, partial NativeHost result, old persisted state, and valid weather.",
+    "WeatherPanel renders only through the normalized contract with explicit guards (Loading / Location not configured / Weather unavailable) and never throws React.",
+    "PanelErrorBoundary wraps each panel so a non-critical panel cannot blank the entire dashboard.",
+    "apparentTemperature from NativeHost is normalized to the feelsLike field the dashboard expects."
+  ],
+  "artifacts": [
+    {
+      "name": "DeskControlPro-Windows-Setup.exe",
+      "bytes": 177915513,
+      "sha256": "A4CABDF23E863686FD9C45A84A674593D46A3E19BB20955EE8284D081960AE43",
+      "publicHashMatchesLocal": true,
+      "githubAssetDigest": "sha256:a4cabdf23e863686fd9c45a84a674593d46a3e19bb20955ee8284d081960ae43",
+      "installedProductVersion": "5.0.3"
+    },
+    {
+      "name": "DeskControlPro-Android.apk",
+      "bytes": 4332166,
+      "sha256": "5FD6DB41F629DE37AEAC9EAA3C52F082B3D15587DBFE90ACBDB17E9105A28902",
+      "unchangedFromV5_0_2": true
+    }
+  ],
+  "publicRoundtrip": {
+    "downloadedFrom": "https://github.com/nnnn00lon/deskcontrol-pro-releases/releases/download/v5.0.3/DeskControlPro-Windows-Setup.exe",
+    "downloadedBytes": 177915513,
+    "localSha256": "A4CABDF23E863686FD9C45A84A674593D46A3E19BB20955EE8284D081960AE43",
+      "publicSha256": "A4CABDF23E863686FD9C45A84A674593D46A3E19BB20955EE8284D081960AE43",
+      "hashesMatch": true
+  },
+  "installedPublicValidation": {
+    "weatherFocusedTestsPassed": "8/8 (undefined, null, missing location, missing city, partial NativeHost result with apparentTemperature->feelsLike, old persisted state, valid, fresh-install startup)",
+    "dashboardContract1280x800Passed": {"quickLaunch": 20, "mixer": 6, "presets": 5, "power": 5, "powerTouchTargets": true, "noOverflow": true},
+    "noUncaughtWeatherPanelException": true,
+    "panelErrorBoundaryActive": true,
+    "weatherFallbackRendered": "Location not configured (truthful fallback on fresh profile; PanelErrorBoundary degrades any panel to 'unavailable' without blanking the dashboard)",
+    "otherPanelsRendered": true,
+    "updateCheckReturned": "DeskControl Pro 5.0.3 is up to date",
+    "screenshotEvidence": "evidence/v6/installed-ui-1280x800.png"
+  },
+  "pagesSiteStatus": "download-site/v5.0.3 source committed to releases repo main; live pages.dev redeploy requires Cloudflare Pages credentials not present in the build sandbox (functional updates already served via GitHub latest release = v5.0.3)",
+  "physicalOnlyGate": "HUMAN_PHYSICAL_GATE_ANDROID_PAIRING_AND_CONTROLS"
+}
